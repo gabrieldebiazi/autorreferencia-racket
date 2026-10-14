@@ -1,0 +1,67 @@
+#lang racket
+
+;1. Faça uma função que receba uma lista de números inteiros e um inteiro n. Sua função deve remover todas as ocorrências de n.
+
+(define (remove-ocorrencia lst n)
+  (cond
+    [(empty? lst)
+     empty]
+    [(equal? (first lst) n)
+     (remove-ocorrencia (rest lst) n)]
+    [else
+    (cons (first lst) (remove-ocorrencia (rest lst) n))]))
+
+(remove-ocorrencia '(1 2 3 4 5) 2)
+(remove-ocorrencia '(1 2 3 4 5) 6)
+(remove-ocorrencia '(1 2 2 2 5) 2)
+(remove-ocorrencia '() 2)
+
+;2. Faça uma função que receba uma lista de strings L e uma string separadora S. Sua função deverá juntar todas as strings de L separadas pela string S. Obs: a ultima strings não deve ser seguida pelo separadora.
+
+(define (junta L S)
+  (cond [(= (length L) 1) (first L)]
+        [else (string-append (first L) S (junta (rest L) S))]))
+
+(junta (list "ola" "mundo!") " ")
+
+;3. Faça uma função que receba dois números, a e b, e retorne uma lista com os números inteiros no intervalo [a, b]. Quando a < b, a lista deve ser vazia.
+
+(define (intervalo a b)
+  (cond
+    [(< b a)
+     empty]
+    [else
+     (cons a (intervalo (+ a 1) b))]))
+
+(intervalo 1 6)
+(intervalo 3 14)
+
+;4. Faça uma função que retorne o ultimo elemento de uma lista de valores.
+
+(define (ultimo L)
+  (cond
+    [(empty? L)
+     empty]
+    [(empty? (rest L))
+     (first L)]
+    [else
+     (ultimo (rest L))]))
+
+(ultimo (list 1 2 3))
+(ultimo (list 1))
+(ultimo (list 1 3 4 2 1 7))
+
+;5. Faça uma função que receba uma lista L e um valor natural n, e retorne uma lista contendo os n primeiros elementos de L.
+
+(define (n-primeiros L n)
+  (cond
+    [(= n 0)
+     empty]
+    [(> n (length L))
+     L]
+    [(cons (first L) (n-primeiros (rest L) (- n 1)))]))
+
+(n-primeiros '(4 8 1 3 9 7 5 6) 4)
+
+(n-primeiros '(4 8 1 3 9 7 5 6) 0)
+(n-primeiros '(4 8) 4)
